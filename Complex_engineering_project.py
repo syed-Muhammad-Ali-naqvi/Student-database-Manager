@@ -60,7 +60,7 @@ def validate_roll_number(roll_num):
 
 def calculate_percentage(quiz_1, quiz_2, mids):
     try:
-        return (quiz_1 + quiz_2 + mids) / 3
+        return round(((quiz_1 + quiz_2 + mids) * 100)/ 100, 2)
     except (TypeError, ValueError):
         return "N/A"
 
