@@ -1,6 +1,22 @@
 from tkinter import simpledialog, messagebox
 import csv
 
+def load_database(file_name):
+    try:
+        with open(file_name, "r") as f:
+            reader = csv.reader(f)
+            data = list(reader)
+            if not data:
+                messagebox.showerror("Error", "File is empty!")
+                return [], []
+            fields, records = data[0], data[1:]
+        messagebox.showinfo("Info", "Database loaded successfully!")
+        return fields, records
+    except FileNotFoundError:
+        messagebox.showerror("Error", f"File {file_name} not found!")
+        return [], []
+
+
 def create_new_database(fields):
     """Prompt user to create a new database with a unique file name."""
     try:
