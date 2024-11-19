@@ -13,7 +13,7 @@ def main_window():
 
     window = Tk()
     window.title("Student Database Management System")
-    window.geometry("800x700")
+    window.geometry("800x600")
 
     # Frames for layout organization
     field_frame = Frame(window)
@@ -23,9 +23,8 @@ def main_window():
     button_frame.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
 
     text_area = Text(window, width=80, height=15)
-    text_area.grid(row=3, column=0, columnspan=4, padx=30, pady=30, sticky="news")
+    text_area.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="news")
 
-    # Configure grid weights for resizing
     window.grid_rowconfigure(3, weight=1)
     window.grid_columnconfigure(0, weight=1)
     window.grid_columnconfigure(1, weight=1)
@@ -36,26 +35,29 @@ def main_window():
 
     def load_existing_database():
         global fields, records, database_file
-        database_file = "student_database.csv"
-        fields, records = load_database(database_file)
-        if fields:
-            update_interface()
+        file_name = simpledialog.askstring("Load Database", "Enter the name of the database (without .csv):")
+        if file_name:
+            database_file = file_name.strip() + ".csv"
+            fields, records = load_database(database_file)
+            if fields:
+                update_interface()
 
     def create_new_database_interface():
         global fields, records, database_file
-        database_file = "new_database.csv"
-        fields_input = simpledialog.askstring("Fields", "Enter field names separated by commas:")
-        if fields_input:
-            fields = [field.strip() for field in fields_input.split(",")]
-            fields, records = create_new_database(database_file, fields)
-            update_interface()
+        file_name = simpledialog.askstring("Create Database", "Enter the name for the new database (without .csv):")
+        if file_name:
+            database_file = file_name.strip() + ".csv"
+            fields_input = simpledialog.askstring("Fields", "Enter field names separated by commas:")
+            if fields_input:
+                fields = [field.strip() for field in fields_input.split(",")]
+                fields, records = create_new_database(database_file, fields)
+                update_interface()
 
-    # Top buttons with equal width
     ttk.Button(window, text="Load Existing Database", command=load_existing_database).grid(
-        row=0, column=0, padx=20, pady=10, sticky="ew",columnspan=1
+        row=0, column=0, padx=10, pady=10, sticky="ew"
     )
     ttk.Button(window, text="Create New Database", command=create_new_database_interface).grid(
-        row=0, column=1, padx=20, pady=10, sticky="ew",columnspan=1
+        row=0, column=1, padx=10, pady=10, sticky="ew"
     )
 
     window.mainloop()
