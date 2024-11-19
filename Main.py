@@ -13,7 +13,7 @@ def main_window():
 
     window = Tk()
     window.title("Student Database Management System")
-    window.geometry("800x600")
+    window.geometry("800x700")
 
     # Frames for layout organization
     field_frame = Frame(window)
@@ -23,7 +23,7 @@ def main_window():
     button_frame.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
 
     text_area = Text(window, width=80, height=15)
-    text_area.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+    text_area.grid(row=3, column=0, columnspan=4, padx=30, pady=30, sticky="news")
 
     # Configure grid weights for resizing
     window.grid_rowconfigure(3, weight=1)
@@ -52,10 +52,10 @@ def main_window():
 
     # Top buttons with equal width
     ttk.Button(window, text="Load Existing Database", command=load_existing_database).grid(
-        row=0, column=0, padx=10, pady=10, sticky="ew"
+        row=0, column=0, padx=20, pady=10, sticky="ew",columnspan=1
     )
     ttk.Button(window, text="Create New Database", command=create_new_database_interface).grid(
-        row=0, column=1, padx=10, pady=10, sticky="ew"
+        row=0, column=1, padx=20, pady=10, sticky="ew",columnspan=1
     )
 
     window.mainloop()
