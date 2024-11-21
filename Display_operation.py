@@ -33,9 +33,9 @@ def update_fields(frame, fields, entries):
         # Store the entry widget in the entries dictionary
         entries[field] = entry
 
-# ====================
+# ======================
 # Setup Buttons Section
-# ====================
+# =====================
 
 def setup_buttons(frame, text_area, fields, records, database_file, entries):
     """
