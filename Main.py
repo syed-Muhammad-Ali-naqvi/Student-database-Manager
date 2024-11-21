@@ -1,7 +1,8 @@
-from tkinter import Tk, Frame, Text, simpledialog, ttk
+from tkinter import Tk, Frame, Text, simpledialog, ttk, messagebox
 from Database_operation import load_database, create_new_database
 from Record_operation import view_records, add_record, edit_record, delete_record, search_record
 from Display_operation import update_fields, setup_buttons
+import os
 
 # ===================
 # Global Variables
@@ -58,16 +59,28 @@ def main_window():
     # Load Existing Database
     # ===================
     def load_existing_database():
-        """
-        Load an existing database file.
-        """
+        """Show existing databases and allow the user to load one."""
         global fields, records, database_file
-        # Ask the user to provide the name of the database file
-        file_name = simpledialog.askstring("Load Database", "Enter the name of the database (without .csv):")
+        # Get all CSV files in the current directory
+        csv_files = [file for file in os.listdir() if file.endswith(".csv")]
+        if not csv_files:
+            simpledialog.messagebox.showinfo("No Databases", "No existing databases found!")
+            return
+        # Display available databases
+        database_options = "\n".join(csv_files)
+        file_name = simpledialog.askstring(
+            "Load Database",
+            f"Enter the name of the database to load (without .csv):\nAvailable Databases:\n{database_options}"
+        )
         if file_name:
-            database_file = file_name.strip() + ".csv"  # Append the .csv extension
-            fields, records = load_database(database_file)  # Load the database
-            if fields:  # If fields are loaded successfully, update the interface
+            database_file = file_name.strip() + ".csv"
+            # Validate if the entered database exists
+            if database_file not in csv_files:
+                simpledialog.messagebox.showerror("Error", "Database not found!")
+                return
+            # Load the selected database
+            fields, records = load_database(database_file)
+            if fields:
                 update_interface()
 
     # ===================
