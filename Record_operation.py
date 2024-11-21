@@ -95,8 +95,8 @@ def delete_record(fields, records, entries, database_file, text_area):
 # ===================
 def view_records(fields, records, text_area):
 
-    text_area.delete("1.0", END)  # Clear the text area
+    text_area.delete("1.0", END)                                                   # Clear the text area
     for record in records:
         for field, value in zip(fields, record):
-            text_area.insert(END, f"{field}: {value}\n")  # Display each field-value pair
-        text_area.insert(END, f"{'=' * 30}\n")  # Add a separator between records
+            text_area.insert(END, f"{field}: {value}\n")                            # Display each field-value pair
+        text_area.insert(END, f"{'=' * 30}\n")                                      # Add a separator between records
