@@ -26,18 +26,18 @@ def create_new_database(file_name, fields):
         with open(file_name, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(fields)
-        # Notify the user about successful creation
+
         messagebox.showinfo("Success", f"New database '{file_name}' created successfully!")
         return fields, []
     except Exception as e:
-        # Show an error message if there was an issue creating the file
+
         messagebox.showerror("Error", f"Failed to create database: {e}")
         return [], []
 
 
-# ===========================
+# ============================
 # Save the changes occur in database
-# ===========================
+# ============================
 def save_database(file_name, fields, records):
 
     try:
@@ -45,7 +45,13 @@ def save_database(file_name, fields, records):
             writer = csv.writer(f)
             writer.writerow(fields)
             writer.writerows(records)
-        # Notify the user about successful saving
-        messagebox.showinfo("Success", f"Database '{file_name}' saved successfully!")
+
+        messagebox.showinfo("Success", f"Changes saved successfully!")
     except Exception as e:
         messagebox.showerror("Error", f"Failed to save database: {e}")
+
+
+
+
+
+
