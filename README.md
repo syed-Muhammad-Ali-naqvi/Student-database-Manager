@@ -5,9 +5,10 @@ This project is a **Student Database Management System** built using Python's **
 ---
 
 ## Features
-
+- **Password Protection**: The application starts with a password validation. The user must enter the correct password ("itssecret") to access the system.
 - **Create New Databases**: Users can create new databases with custom field names.
 - **Load Existing Databases**: Displays a list of all available databases in the current directory for easy loading.
+- **Available Files**: "student_database.csv" & "Existing_database.csv"
 - **Add Records**: Add new student records to the database.
 - **Search Records**: Search for a student using a unique key (e.g., roll number).
 - **Edit Records**: Modify existing student records.
@@ -48,5 +49,13 @@ This project is a **Student Database Management System** built using Python's **
 ## How to Run
 
 1. Ensure you have **Python 3.x** installed.
-2. Clone or download the project files.
+2. Running it on PyCharm is recommended.
 3. Run `Main.py` to start the application
+4. Enter "itssecret" as a password to get access to the system.
+
+---
+## Sample Run
+1. Start the application by running the script.
+2. Enter the password ("itssecret") to proceed.
+3. Choose to either load an existing database or create a new one.
+4. Perform CRUD operations on the database records (Add, Edit, Delete, View).
