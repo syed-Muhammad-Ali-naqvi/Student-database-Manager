@@ -49,9 +49,8 @@ This project is a **Student Database Management System** built using Python's **
 ## How to Run
 
 1. Ensure you have **Python 3.x** installed.
-2. Running it on PyCharm is recommended.
-3. Run `Main.py` to start the application
-4. Enter "itssecret" as a password to get access to the system.
+2. Run `Main.py` to start the application
+3. Enter "itssecret" as a password to get access to the system.
 
 ---
 ## Sample Run
