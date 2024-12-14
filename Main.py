@@ -1,5 +1,6 @@
 from tkinter import Tk, Frame, Text, simpledialog, ttk, messagebox
 from Database_operation import load_database, create_new_database
+
 from Record_operation import view_records, add_record, edit_record, delete_record, search_record
 from Display_operation import update_fields, setup_buttons
 import os
@@ -12,6 +13,30 @@ records = []                                                # List to store data
 database_file = ""                                          # String to store the current database file name
 entries = {}                                                # Dictionary to map field names to entry widgets
 
+
+# ===================
+# Password Validation
+# ===================
+
+password = "itssecret"
+# initial_value = 'itssecret'
+def check_password():
+    while True:
+        entered_password = simpledialog.askstring("Password", "Enter the password:")
+
+        if entered_password is None:
+            if messagebox.askyesno("Cancelled", "You cancelled the password entry. Do you want to exit?"):
+                return False
+            else:
+                continue
+
+
+        if entered_password == password:
+            messagebox.showinfo("Info", "Access granted!")
+            return True
+        else:
+            messagebox.showerror("Info", 'Enter "itssecret" as a password')
+
 def main_window():
     global fields, records, database_file, entries
 
@@ -20,7 +45,7 @@ def main_window():
     # ===================
     window = Tk()
     window.title("Student Database Management System")
-    window.geometry("800x600")
+    window.geometry("800x600+100+100")
 
     # ===================
     # Frame for Field Entries
@@ -61,11 +86,18 @@ def main_window():
     def load_existing_database():
         """Show existing databases and allow the user to load one."""
         global fields, records, database_file
+        # Get current working directory and files in it
+        current_dir = os.getcwd()
+        print("Current Directory:", current_dir)
+        
         # Get all CSV files in the current directory
-        csv_files = [file for file in os.listdir() if file.endswith(".csv")]
+        csv_files = [file for file in os.listdir(current_dir) if file.lower().endswith(".csv")]
+        print("Detected CSV files:", csv_files)
+
         if not csv_files:
             simpledialog.messagebox.showinfo("No Databases", "No existing databases found!")
             return
+        
         # Display available databases
         database_options = "\n".join(csv_files)
         file_name = simpledialog.askstring(
@@ -74,11 +106,11 @@ def main_window():
         )
         if file_name:
             database_file = file_name.strip() + ".csv"
-            # Validate if the entered database exists
+
             if database_file not in csv_files:
                 simpledialog.messagebox.showerror("Error", "Database not found!")
                 return
-            # Load the selected database
+
             fields, records = load_database(database_file)
             if fields:
                 update_interface()
@@ -91,15 +123,15 @@ def main_window():
         Create a new database file with user-defined fields.
         """
         global fields, records, database_file
-        # Ask the user for the new database name
+
         file_name = simpledialog.askstring("Create Database", "Enter the name for the new database (without .csv):")
         if file_name:
-            database_file = file_name.strip() + ".csv"  # Append the .csv extension
-            # Ask the user for field names
+            database_file = file_name.strip() + ".csv"
+
             fields_input = simpledialog.askstring("Fields", "Enter field names separated by commas:")
             if fields_input:
-                fields = [field.strip() for field in fields_input.split(",")]  # Split and clean field names
-                fields, records = create_new_database(database_file, fields)  # Create the new database
+                fields = [field.strip() for field in fields_input.split(",")]
+                fields, records = create_new_database(database_file, fields)
                 update_interface()
 
     # ===================
@@ -112,10 +144,16 @@ def main_window():
         row=0, column=1, padx=10, pady=10, sticky="ew"
     )
 
-    # ===================
-    # Start Main Event Loop
-    # ===================
-    window.mainloop()
+    return window
+
+# ===================
+# Start Main Event Loop
+# ===================
 
 if __name__ == "__main__":
-    main_window()
+    if check_password():
+        window = main_window()
+        window.deiconify()
+        window.lift()
+        window.focus_force()
+        window.mainloop()
